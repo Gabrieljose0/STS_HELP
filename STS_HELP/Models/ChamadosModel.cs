@@ -19,15 +19,17 @@ namespace STS_HELP.Models
 
 
         [Column("categoria")]
-        public int Categoria { get; set; }
+        public int CategoriaId { get; set; }
+        public CategoriaModel Categoria { get; set; }
 
 
         [Column("prioridade")]
-        public int Prioridade { get; set; }
-
+        public int PrioridadeId { get; set; }
+        public PrioridadeModel Prioridade { get; set; }
 
         [Column("usuario")]
-        public int Usuario { get; set; }
+        public int UsuarioId { get; set; }
+        public UsuariosModel Usuario { get; set; }
 
 
         [Column("dt_abertura")]
@@ -40,7 +42,8 @@ namespace STS_HELP.Models
 
 
         [Column("status")]
-        public int status { get; set; }
+        public int statusId { get; set; }
+        public StatusModel Status { get; set; }
 
-}
+    }
 }

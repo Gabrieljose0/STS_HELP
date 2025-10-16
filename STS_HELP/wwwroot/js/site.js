@@ -49,6 +49,7 @@ if (ativarModal) {
 //Modais Index Chamados
 const AceitarChamadoModal = document.getElementById('AceitarChamadoModal');
 const finalizarChamadoModal = document.getElementById('FinalizarChamadoModal');
+const VisualizartextoModal = document.getElementById('VisualizartextoModal');
 
 
 if (AceitarChamadoModal) {
@@ -62,6 +63,7 @@ if (AceitarChamadoModal) {
 
         // Encontra o input escondido dentro do modal e define seu valor
         const hiddenInput = AceitarChamadoModal.querySelector('#ChamadoIdIniciar');
+
         hiddenInput.value = chamadoId;
     });
 }
@@ -83,6 +85,27 @@ if (finalizarChamadoModal) {
     });
 
 }
+
+if (VisualizartextoModal) {
+
+    VisualizartextoModal.addEventListener('show.bs.modal', event => {
+        // Pega o botão que abriu o modal
+        const button = event.relatedTarget;
+
+        // Extrai o ID do atributo data-id do botão
+        const chamadoId = button.getAttribute('data-id');
+        const chamadoTexto = button.getAttribute('data-texto');
+
+        // Encontra o input escondido dentro do modal e define seu valor
+        const hiddenInput = VisualizartextoModal.querySelector('#ChamadoIdIniciar');
+        const pTexto = VisualizartextoModal.querySelector('#textoDoChamado');
+
+        hiddenInput.value = chamadoId;
+        pTexto.textContent = chamadoTexto;
+    });
+}
+
+
 
 if ($('#tabelaUsuarios').length) {
 

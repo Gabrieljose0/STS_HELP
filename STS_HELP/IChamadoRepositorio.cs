@@ -13,7 +13,8 @@ namespace STS_HELP
 
         ChamadosModel AceitarEFinalizarChamado(int id);
 
-        //ChamadosModel FinalizarChamados(int id);
+      
+
        
     }
 }

@@ -60,7 +60,7 @@ namespace STS_HELP.Controllers
         {
             if (ModelState.IsValid)
             {
-                chamados.status = 1;
+                chamados.statusId = 1;
 
                 // Define a data de abertura como o momento exato da criação do chamado.
                 chamados.dt_Abertura = DateTime.UtcNow;

@@ -19,11 +19,20 @@ namespace STS_HELP.Repositorio
 
         public List<ChamadosModel> ListarChamados()
         {
-            
+
 
             //Imprelementar Dps Join com as tabelas Categoria, Status, Usuario.
-            return _bancoContext.Chamados.OrderBy(u => u.Id).ToList(); 
-                
+            //return _bancoContext.Chamados.OrderBy(u => u.Id).ToList();
+
+            return _bancoContext.Chamados
+                         .Include(c => c.Usuario)
+                         .Include(c => c.Status)
+                         .Include(c => c.Categoria)
+                         .Include(c => c.Prioridade)
+                         .OrderBy(c => c.Id)
+                         .ToList();
+
+
         }
 
 
@@ -54,13 +63,13 @@ namespace STS_HELP.Repositorio
 
             // Altere o status do Chamado
 
-            if (ChamadosDB.status == 1)
+            if (ChamadosDB.statusId == 1)
             {
-                ChamadosDB.status = 2;
+                ChamadosDB.statusId = 2;
             }
-            else if(ChamadosDB.status == 2) 
+            else if(ChamadosDB.statusId == 2) 
             {
-                ChamadosDB.status = 3;
+                ChamadosDB.statusId = 3;
 
                 ChamadosDB.dt_fechamento = DateTime.UtcNow;
             }

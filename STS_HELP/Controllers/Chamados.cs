@@ -23,8 +23,17 @@ namespace STS_HELP.Controllers
             List<ChamadosModel> listaChamados = _chamadoRepositorio.ListarChamados();
 
 
-
             return View(listaChamados);
+
+        }
+
+        public IActionResult IndexChamadosGestor()
+        {
+            List<ChamadosModel> listaChamadosGestor = _chamadoRepositorio.ListarChamados();
+
+
+            return View(listaChamadosGestor);
+
         }
 
         public IActionResult AceitarChamado(int id)
@@ -77,7 +86,7 @@ namespace STS_HELP.Controllers
         }
 
 
-
+        
 
 
 

@@ -11,17 +11,29 @@
             <li class="nav-item">
                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Início</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="" asp-controller="Chamados" asp-action="Index">Chamados</a>
-            </li>
-           
 
-            @if(Model.TipoUsuario == "Gestor")
+            @* Menu pro Técnico *@
+            @if(Model.TipoUsuario == "Tecnico")
             {
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Chamados" asp-action="Index">Chamados</a>
+                </li>
+            }
+            
+
+
+            @* Menu pro Gestor *@
+            @if (Model.TipoUsuario == "Gestor")
+            {
+            <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Chamados" asp-action="IndexChamadosGestor">Chamados</a>
+            </li>
+
                 <li class="nav-item">
                     <a class="nav-link text-dark" asp-area="" asp-controller="Usuarios" asp-action="Index">Usuários</a>
                 </li>
             }
+
 
 
             <li class="nav-item">

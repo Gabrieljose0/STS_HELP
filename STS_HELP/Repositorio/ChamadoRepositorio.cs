@@ -19,6 +19,8 @@ namespace STS_HELP.Repositorio
 
         public List<ChamadosModel> ListarChamados()
         {
+            
+
             //Imprelementar Dps Join com as tabelas Categoria, Status, Usuario.
             return _bancoContext.Chamados.OrderBy(u => u.Id).ToList(); 
                 

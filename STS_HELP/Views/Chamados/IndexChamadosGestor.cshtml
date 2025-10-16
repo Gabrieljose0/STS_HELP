@@ -1,0 +1,131 @@
+﻿@model List<ChamadosModel>
+
+@{
+    ViewData["Title"] = "CHAMADOS";
+}
+
+<div>
+    <h1 class="">Chamados</h1>
+</div>
+
+<div>
+    <a class="btn btn-primary" role="button" asp-controller="Chamados" asp-action="CriarChamado">  Criar Chanmado  </a>
+</div>
+
+<table class="table table-striped mt-5" id="tabelaChamados">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">TITULO</th>
+            <th scope="col">DESCRIÇÃO</th>
+            <th scope="col">CATEGORIA</th>
+            <th scope="col">PRIORIDADE</th>
+            <th scope="col">STATUS</th>
+            <th scope="col">USUARIO</th>
+            <th scope="col">DT ABERTURA</th>
+            <th scope="col">DT FECHAMENTO</th>
+            <th scope="col">Atendendimento</th>
+            @* <th scope="col">FINALIZAR</th> *@
+        </tr>
+    </thead>
+    <tbody>
+
+        @if(Model != null && Model.Any())
+        {
+            foreach (ChamadosModel chamado in Model)
+            {
+                <tr>
+                    <th scope="row">@chamado.Id</th>
+                    <td>@chamado.Titulo</td>
+                    <td>@chamado.Texto</td>
+                    <td>@chamado.Categoria</td>
+                    <td>@chamado.Prioridade</td>
+                    
+                    @if(chamado.status == 1)
+                    {
+                        <td> <button class="btn btn-primary" disabled> Aberto </button>  </td>
+                    }
+                    else if(chamado.status == 2)
+                    {
+                        <td> <button class="btn btn-warning" disabled> Atendimento </button>  </td>
+                    }
+                    else if(chamado.status == 3)
+                    {
+                        <td> <button class="btn btn-success" disabled> Finalizado </button>  </td>
+                    }
+
+                    <td>@chamado.Usuario</td>
+                    <td>@chamado.dt_Abertura</td>
+                    <td>@chamado.dt_fechamento</td>
+
+                    <td>
+
+                       @* Atribuir Técnico q está atendendo *@
+                    </td>
+
+                </tr>
+            }
+        }
+
+       
+
+    </tbody>
+</table>
+
+
+@* MODAL ACEITAR CHAMADO*@
+<div class="modal fade" id="AceitarChamadoModal" tabindex="-1" aria-labelledby="IniciarChamadoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="IniciarChamadoModalLabel">ACEITAR CHAMADO?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Deseja Iniciar o Atendimento desse Chamado?
+            </div>
+            <div class="modal-footer">
+                <form asp-controller="Chamados" asp-action="AceitarEFinalizarChamado" method="post">
+                    <input type="hidden" name="id" id="ChamadoIdIniciar" />
+
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-danger">Aceitar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@* MODAL FINALIZA CHAMADO*@
+<div class="modal fade" id="FinalizarChamadoModal" tabindex="-1" aria-labelledby="FinalizarChamadoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="FinalizarChamadoModal">FINALIZAR CHAMADOS?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Deseja Encerrar o Atendimento desse Chamado?
+            </div>
+            <div class="modal-footer">
+                <form asp-controller="chamados" asp-action="AceitarEFinalizarChamado" method="post">
+                    <input type="hidden" name="id" id="ChamadoIdFinalizar" />
+
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Finalizar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    
+
+
+        
+
+</script>

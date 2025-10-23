@@ -41,6 +41,7 @@
                             Visualizar
                         </button>
                     </td>
+
                     @if (chamado.Status.Id == 1)
                     {
                         <td><button class="btn btn-primary" disabled> @chamado.Status.Nome </button></td>
@@ -53,11 +54,24 @@
                     {
                         <td> <button class="btn btn-success" disabled> @chamado.Status.Nome </button>  </td>
                     }
-                    <td>@chamado.Prioridade.Nome</td>
+
+
+                    @if (chamado.Prioridade.Id == 1)
+                    {
+                        <td><button class="btn btn-secondary"> @chamado.Prioridade.Nome </button></td>
+                    }
+                    else if (chamado.Prioridade.Id == 2)
+                    {
+                        <td> <button class="btn btn-warning"> @chamado.Prioridade.Nome </button>  </td>
+                    }
+                    else if (chamado.Prioridade.Id == 3)
+                    {
+                        <td> <button class="btn btn-danger"> @chamado.Prioridade.Nome </button>  </td>
+                    }
+
                     <td>@chamado.Categoria.Nome</td>
                     <td>@chamado.Usuario.Nome</td>
-                    @* <td>@chamado.tecnico</td>  Exibir Tecnico q está atendendo*@
-                    <td>Tecnico que etsá atendendo</td>
+                    <td>@chamado.Tecnico?.Nome</td>
                     <td>@chamado.dt_Abertura</td>
                     <td>@chamado.dt_fechamento</td>
 

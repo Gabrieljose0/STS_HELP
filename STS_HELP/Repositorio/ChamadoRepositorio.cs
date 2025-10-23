@@ -29,6 +29,7 @@ namespace STS_HELP.Repositorio
                          .Include(c => c.Status)
                          .Include(c => c.Categoria)
                          .Include(c => c.Prioridade)
+                         .Include(c => c.Tecnico)
                          .OrderBy(c => c.Id)
                          .ToList();
 
@@ -52,7 +53,7 @@ namespace STS_HELP.Repositorio
         }
 
 
-        public ChamadosModel AceitarEFinalizarChamado(int id)
+        public ChamadosModel AceitarEFinalizarChamado(int id, int idTecnico)
         {
             ChamadosModel ChamadosDB = ExibeInfoChamado(id);
 
@@ -66,6 +67,8 @@ namespace STS_HELP.Repositorio
             if (ChamadosDB.statusId == 1)
             {
                 ChamadosDB.statusId = 2;
+
+                ChamadosDB.idTecnico = idTecnico;
             }
             else if(ChamadosDB.statusId == 2) 
             {
@@ -74,7 +77,7 @@ namespace STS_HELP.Repositorio
                 ChamadosDB.dt_fechamento = DateTime.UtcNow;
             }
 
-            //_bancoContext.Chamados.Update(ChamadosDB);
+            
             _bancoContext.SaveChanges();
 
             return ChamadosDB;
@@ -82,4 +85,5 @@ namespace STS_HELP.Repositorio
 
         
     }
+
 }

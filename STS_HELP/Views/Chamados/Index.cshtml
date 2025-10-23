@@ -73,8 +73,7 @@
 
                     <td>@chamado.Categoria.Nome</td>
                     <td>@chamado.Usuario.Nome</td>
-                    @* <td>@chamado.tecnico</td>  Exibir Tecnico q está atendendo*@
-                    <td>Tecnico que etsá atendendo</td>
+                    <td>@chamado.Tecnico?.Nome</td>  
                     <td>@chamado.dt_Abertura</td>
                     <td>@chamado.dt_fechamento</td>
                     

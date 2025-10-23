@@ -41,6 +41,13 @@ namespace STS_HELP.Models
         public DateTime? dt_fechamento { get; set; }
 
 
+        [Column("id_tecnico")]
+        public int? idTecnico { get; set; }
+
+        [ForeignKey("idTecnico")]
+        public UsuariosModel Tecnico { get; set; }
+
+
         [Column("status")]
         public int statusId { get; set; }
         public StatusModel Status { get; set; }

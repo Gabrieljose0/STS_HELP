@@ -11,7 +11,7 @@ namespace STS_HELP
 
         ChamadosModel ExibeInfoChamado(int id);
 
-        ChamadosModel AceitarEFinalizarChamado(int id);
+        ChamadosModel AceitarEFinalizarChamado(int id, int idTecnico);
 
       
 

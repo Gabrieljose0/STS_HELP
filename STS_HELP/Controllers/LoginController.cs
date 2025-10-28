@@ -52,10 +52,12 @@ namespace STS_HELP.Controllers
                     if(usuario != null )
                     {
 
-                        _sessao.CriarSessaoUsuario(usuario);
+                        
+
                         if (usuario.SenhaValida(loginModel.Senha))
                         {
-                            if(usuario.SituacaoUsuario == true)
+                            _sessao.CriarSessaoUsuario(usuario);
+                            if (usuario.SituacaoUsuario == true)
                             {
                                 //_sessao.CriarSessaoUsuario(usuario);
                                 return RedirectToAction("Index", "Home");
@@ -63,6 +65,7 @@ namespace STS_HELP.Controllers
                             else
                             {
                                 TempData["MensagemErro"] = $"Usuario Inativo, Por favor entrar em contato com Gestor!";
+                                return View("Index");
                             }
                             
                         }

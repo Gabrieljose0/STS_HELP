@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using STS_HELP.Filters;
+using STS_HELP.Helper;
 using STS_HELP.Models;
 using System.Diagnostics;
 
@@ -7,8 +8,12 @@ namespace STS_HELP.Controllers
 {
     [PaginaParaUsuariosLogados("Gestor", "Tecnico")]
 
-    public class HomeController : Controller
+    public class HomeController : VerificarSessaoController
     {
+        public HomeController(ISessao sessao) : base(sessao)
+        {
+        }
+
         //private readonly ILogger<HomeController> _logger;
 
         //public HomeController(ILogger<HomeController> logger)

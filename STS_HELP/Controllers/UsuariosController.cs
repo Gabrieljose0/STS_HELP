@@ -1,19 +1,22 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using STS_HELP.Filters;
+using STS_HELP.Helper;
 using STS_HELP.Models;
 
 namespace STS_HELP.Controllers
 {
 
     [PaginaParaUsuariosLogados("Gestor")]
-    public class UsuariosController : Controller
+    public class UsuariosController : VerificarSessaoController
     {
 
         private readonly IUsuariosRepositorio _usuariosRepositorio;
+        private new readonly ISessao _sessao;
 
-        public UsuariosController(IUsuariosRepositorio usuariosRepositorio)
+        public UsuariosController(IUsuariosRepositorio usuariosRepositorio, ISessao sessao) : base(sessao)
         {
             _usuariosRepositorio = usuariosRepositorio;
+            _sessao = sessao;
         }
 
 

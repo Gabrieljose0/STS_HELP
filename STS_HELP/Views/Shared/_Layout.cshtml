@@ -12,27 +12,41 @@
 
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-           @await Component.InvokeAsync("Menu");
-        </nav>
-    </header>
+   
+        <div class="">
+            <div class="row">
+            <div class="col-sm-auto bg-body-secondary sticky-top">
+                <div class="d-flex flex-sm-column flex-row flex-nowrap align-items-center sticky-top">
+                       @await Component.InvokeAsync("Menu")
+                    </div>
+                </div>
+
+                <div class="col-sm p-3 min-vh-100">
+                    <div class="m-3">
+                        <main role="main" class="pb-3">
+                            <div class="col-sm min-vh-100">
+                                @RenderBody()
+                            </div>
+                        </main>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    
 
 
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+   
 
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2025 - STS_HELP - 
+            &copy; 2025 - STS_HELP
             @* <a asp-area="" asp-controller="Home" asp-action="index">Inicio</a>
             <a asp-area="" asp-controller="Chamados" asp-action="Privacy">Chamados</a> *@
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true" defer></script>

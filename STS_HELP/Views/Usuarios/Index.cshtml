@@ -13,65 +13,63 @@
     <a class="btn btn-primary" role="button" asp-controller="Usuarios" asp-action="CriarUsuario">  Cadastrar Usuario  </a>
 </div>
 
-<table class="table table-striped mt-5" id="tabelaUsuarios">
-    <thead>
-        <tr>
-            <th scope="col">ID</th>
-            <th scope="col">NOME</th>
-            <th scope="col">EMAIL</th>
-            <th scope="col">USUARIO</th>
-            <th scope="col">ATIVO?</th>
-            @* <th scope="col">SENHA</th>
-            <th scope="col">STATUS</th>
-            <th scope="col">USUARIO</th>
-            <th scope="col">DT ABERTURA</th>
-            <th scope="col">DT FECHAMENTO</th>*@
-            <th scope="col">EDITAR</th>
-            <th scope="col">INATIVAR/ATIVAR</th> 
-        </tr>
-    </thead>
-    <tbody>
-        @if(Model != null && Model.Any())
-        {
-            foreach(UsuariosModel usuario in Model)
+<div class="table-responsive">
+    <table class="table table-striped mt-5" id="tabelaUsuarios">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">NOME</th>
+                <th scope="col">EMAIL</th>
+                <th scope="col">USUARIO</th>
+                <th scope="col">ATIVO?</th>
+                @* <th scope="col">SENHA</th>
+                <th scope="col">STATUS</th>
+                <th scope="col">USUARIO</th>
+                <th scope="col">DT ABERTURA</th>
+                <th scope="col">DT FECHAMENTO</th>*@
+                <th scope="col">EDITAR</th>
+                <th scope="col">INATIVAR/ATIVAR</th> 
+            </tr>
+        </thead>
+        <tbody>
+            @if(Model != null && Model.Any())
             {
-                <tr>
-                    <th scope="row">@usuario.Id</th>
-                    <td>@usuario.Nome</td>
-                    <td>@usuario.Email</td>
-                    <td>@usuario.TipoUsuario</td>
-                    <td>@usuario.SituacaoUsuario</td>
-                    @*<td>@usuario.Senha</td>
-                    <td>@chamado.status</td>
-                    <td>@chamado.Usuario</td>
-                    <td>@chamado.dt_Abertura</td>
-                    <td>@chamado.dt_fechamento</td> *@
-                    <td> <a class="btn btn-primary" role="button" asp-route-id="@usuario.Id" asp-controller="Usuarios" asp-action="EditarUsuario">  Editar  </a> </td>
+                foreach(UsuariosModel usuario in Model)
+                {
+                    <tr>
+                        <th scope="row">@usuario.Id</th>
+                        <td>@usuario.Nome</td>
+                        <td>@usuario.Email</td>
+                        <td>@usuario.TipoUsuario</td>
+                        <td>@usuario.SituacaoUsuario</td>
+                        @*<td>@usuario.Senha</td>
+                        <td>@chamado.status</td>
+                        <td>@chamado.Usuario</td>
+                        <td>@chamado.dt_Abertura</td>
+                        <td>@chamado.dt_fechamento</td> *@
+                        <td> <a class="btn btn-primary" role="button" asp-route-id="@usuario.Id" asp-controller="Usuarios" asp-action="EditarUsuario">  Editar  </a> </td>
 
-                    <td>
-                        @if(usuario.SituacaoUsuario == true)
-                        {
-                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#inativarModal" data-id="@usuario.Id">
-                                Inativar
-                            </button>
-                        }
-                        else
-                        {
-                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#ativarModal" data-id="@usuario.Id">
-                                Ativar
-                            </button>
-                        }
-                    </td>  
-                </tr>
+                        <td>
+                            @if(usuario.SituacaoUsuario == true)
+                            {
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#inativarModal" data-id="@usuario.Id">
+                                    Inativar
+                                </button>
+                            }
+                            else
+                            {
+                                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#ativarModal" data-id="@usuario.Id">
+                                    Ativar
+                                </button>
+                            }
+                        </td>  
+                    </tr>
+                }
             }
-        }
 
-
-
-
-    </tbody>
-</table>
-
+        </tbody>
+    </table>
+</div>
 
 @* MODAL INATIVAR USUARIO*@
 <div class="modal fade" id="inativarModal" tabindex="-1" aria-labelledby="inativarModalLabel" aria-hidden="true">

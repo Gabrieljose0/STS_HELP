@@ -7,12 +7,12 @@ using STS_HELP.Repositorio;
 namespace STS_HELP.Controllers
 {
     [PaginaParaUsuariosLogados("Gestor", "Tecnico")]
-    public class Chamados : Controller
+    public class Chamados : VerificarSessaoController
     {
         private readonly IChamadoRepositorio _chamadoRepositorio;
-        private readonly ISessao _sessao;
+        private new readonly ISessao _sessao;
 
-        public Chamados(IChamadoRepositorio chamadoRepositorio, ISessao sessao)
+        public Chamados(IChamadoRepositorio chamadoRepositorio, ISessao sessao) : base(sessao)
         {
             _chamadoRepositorio = chamadoRepositorio;
             _sessao = sessao;

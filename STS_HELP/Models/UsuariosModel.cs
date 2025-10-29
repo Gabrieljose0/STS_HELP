@@ -1,19 +1,19 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.VisualBasic;
-using STS_HELP.Helper;
 
 
 namespace STS_HELP.Models
 {
 
     [Table("usuarios")]
-    public class 
-        
-        UsuariosModel
+    public class UsuariosModel
     {
         [Column("id")]
         public int Id { get; set; }
+
+        [Column("auth_id")]
+        public Guid AuthId { get; set; }
+
 
         [Column("nome")]
         public string Nome { get; set; } = "";
@@ -23,8 +23,8 @@ namespace STS_HELP.Models
         public string Email { get; set; } = "";
 
 
-        [Column("senha")]
-        public string Senha { get; set; } = "";
+        //[Column("senha")]
+        //public string Senha { get; set; } = "";
 
 
         [Column("tipo_usuario")]
@@ -33,15 +33,8 @@ namespace STS_HELP.Models
         [Column("situacao_usuario")]
         public bool SituacaoUsuario { get; set; }
 
+        [NotMapped]
+        public string SenhaParaCadastro { get; set; } = "";
 
-        public bool SenhaValida(string senha)
-        {
-            return Senha  == senha.GerarHash();
-        }
-
-        public void SetSenhaHash()
-        {
-            Senha = Senha.GerarHash();
-        }
     }
 }

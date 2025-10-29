@@ -68,16 +68,28 @@ namespace STS_HELP.Controllers
 
 
         [HttpPost]
-        public IActionResult EditarUsuario(UsuariosModel usuarios)
+        public async Task<IActionResult> EditarUsuario(UsuariosModel usuarios)
         {
-            if (ModelState.IsValid)
+            try
             {
+                ModelState.Remove(nameof(usuarios.SenhaParaCadastro));
 
-                _usuariosRepositorio.EditaUsuario(usuarios);
+                if (ModelState.IsValid)
+                {
+                    await _usuariosRepositorio.EditaUsuario(usuarios);
 
+                    TempData["MensagemSucesso"] = "Usuário alterado com sucesso!";
+                    return RedirectToAction("Index");
+                }
+
+                
+                return View(usuarios);
+            }
+            catch (Exception erro)
+            {
+                TempData["MensagemErro"] = $"Ops, não foi possivel salvar as alterações do usuário. Detalhe: {erro.Message}";
                 return RedirectToAction("Index");
             }
-            return View(usuarios);
         }
 
 

@@ -1,7 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using STS_HELP.Helper;
 using STS_HELP.Models;
+using Supabase;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using Supabase.Gotrue.Exceptions;
+using System.Threading.Tasks;
+
 
 namespace STS_HELP.Controllers
 {
@@ -10,11 +14,14 @@ namespace STS_HELP.Controllers
 
         private readonly IUsuariosRepositorio _usuariosRepositorio;
         private readonly ISessao _sessao;
-        
-        public loginController(IUsuariosRepositorio usuarioRepositorio, ISessao sessao)
+        //private readonly Supabase.Gotrue.Client _gotrueClient;
+        private readonly IConfiguration _configuration;
+
+        public loginController(IUsuariosRepositorio usuarioRepositorio, ISessao sessao, IConfiguration configuration)
         {
             _usuariosRepositorio = usuarioRepositorio;
             _sessao = sessao;
+            _configuration = configuration;
         }
 
 
@@ -40,50 +47,66 @@ namespace STS_HELP.Controllers
 
 
         [HttpPost]
-        public IActionResult LogarSistema(LoginModel loginModel)
+        public async Task<IActionResult> LogarSistema(LoginModel loginModel)
         {
             try
             {
                 if(ModelState.IsValid)
                 {
 
-                   UsuariosModel usuario = _usuariosRepositorio.BuscarLogin(loginModel.Email);
+                    var supabaseUrl = _configuration["Supabase:Url"] + "/auth/v1";
+                    var supabaseAnonKey = _configuration["Supabase:AnonKey"];
 
-                    if(usuario != null )
+
+                    var publicClient = new Supabase.Gotrue.Client(new Supabase.Gotrue.ClientOptions
+                    {
+                        Url = supabaseUrl,
+                        Headers = new Dictionary<string, string>
+                        {
+                            { "apikey", supabaseAnonKey } // Usa a chave ANON
+                        }
+                    });
+
+                    //var session = await _gotrueClient.SignIn(loginModel.Email, loginModel.Senha);
+                    var session = await publicClient.SignIn(loginModel.Email, loginModel.Senha);
+
+                    UsuariosModel usuario = _usuariosRepositorio.BuscarLogin(loginModel.Email);
+
+                    if (usuario != null )
                     {
 
                         
-
-                        if (usuario.SenhaValida(loginModel.Senha))
+                        if (usuario.SituacaoUsuario == true)
                         {
                             _sessao.CriarSessaoUsuario(usuario);
-                            if (usuario.SituacaoUsuario == true)
-                            {
-                                //_sessao.CriarSessaoUsuario(usuario);
-                                return RedirectToAction("Index", "Home");
-                            }
-                            else
-                            {
-                                TempData["MensagemErro"] = $"Usuario Inativo, Por favor entrar em contato com Gestor!";
-                                return View("Index");
-                            }
-                            
+                            return RedirectToAction("Index", "Home");
+                        }
+                        else
+                        {
+                            TempData["MensagemErro"] = $"Usuario Inativo, Por favor entrar em contato com Gestor!";
+                            return View("Index");
                         }
 
-
-                        TempData["MensagemErro"] = $"E-mail ou Senha Incorretas. Tente Novamente";
+                    }
+                    else
+                    {
+                        TempData["MensagemErro"] = $"Erro ao carregar perfil de usuário";
+                        return View("Index");
                     }
 
-                    TempData["MensagemErro"] = $"E-mail ou Senha Incorretas. Tente Novamente";
-                    
                 }
 
                 return View("Index");
 
             }
+            catch (GotrueException gotrueEx)
+            {
+                TempData["MensagemErro"] = $"Erro do Supabase: {gotrueEx.Message}";
+                return View("Index");
+            }
             catch (Exception erro)
             {
-                TempData["MensagemErro"] = $"Não Foi Possivel Efetuar Login. Tente Novamente, Detalhe do Erro: {erro.Message}";
+                TempData["MensagemErro"] = $"Não Foi Possivel Efetuar Login. Tente Novamente. Detalhe: {erro.Message}";
                 return RedirectToAction("Index");
             }
         }

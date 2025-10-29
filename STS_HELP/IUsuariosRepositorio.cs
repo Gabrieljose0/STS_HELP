@@ -9,11 +9,11 @@ namespace STS_HELP
 
         List<UsuariosModel> ListarUsuarios();
 
-        UsuariosModel Adicionar(UsuariosModel usuarios);
+        Task<UsuariosModel> Adicionar(UsuariosModel usuarios);
 
         UsuariosModel ExibeInfoUsuario(int id);
 
-        UsuariosModel EditaUsuario(UsuariosModel usuarios);
+        Task<UsuariosModel> EditaUsuario(UsuariosModel usuarios);
 
         UsuariosModel Inativar(int id);
 

@@ -57,24 +57,21 @@ namespace STS_HELP.Controllers
         {
             try
             {
-                // 2. O 'ModelState.IsValid' (que agora sabemos que funciona)
+                
                 if (ModelState.IsValid)
                 {
                     usuarios.SituacaoUsuario = true;
 
-                    // 3. Use 'await' para ESPERAR o repositório terminar
+                    //'await' para ESPERAR o repositório terminar
                     await _usuariosRepositorio.Adicionar(usuarios);
 
                     TempData["MensagemSucesso"] = "Usuário cadastrado com sucesso!";
 
-                    // 4. Busque a lista nova DEPOIS que o usuário foi adicionado
                     List<UsuariosModel> listaUsuarios = _usuariosRepositorio.ListarUsuarios();
 
-                    // 5. Retorne a View 'Index' com a lista JÁ ATUALIZADA
                     return View("Index", listaUsuarios);
                 }
 
-                // Se o modelo não for válido, retorna para a tela de criação
                 return View(usuarios);
             }
             catch (Exception erro)

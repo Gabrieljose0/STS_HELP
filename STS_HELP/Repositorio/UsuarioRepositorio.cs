@@ -102,15 +102,13 @@ namespace STS_HELP.Repositorio
                 authApiPayload["email"] = usuarios.Email;
             }
 
-            // 5. Atualiza os dados do perfil local (do seu banco 'public.usuarios')
-            //    Isso sempre acontece (Nome, Tipo)
+            
             usuarioDB.Nome = usuarios.Nome;
             usuarioDB.Email = usuarios.Email; // Atualiza o email local também
             usuarioDB.TipoUsuario = usuarios.TipoUsuario;
             _bancoContext.Usuarios.Update(usuarioDB);
 
-            // 6. --- CHAMADA DA API (Se necessário) ---
-            // Se o payload tem algo (email ou senha para mudar), chame a API
+          
             if (authApiPayload.Count > 0)
             {
                 if (usuarioDB.AuthId == null)

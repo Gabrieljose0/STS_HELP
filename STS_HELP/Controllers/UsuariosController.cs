@@ -53,17 +53,35 @@ namespace STS_HELP.Controllers
 
         //METODOS POST
         [HttpPost]
-        public IActionResult CriarUsuario(UsuariosModel usuarios)
+        public async Task<IActionResult> CriarUsuario(UsuariosModel usuarios)
         {
-            if (ModelState.IsValid)
+            try
             {
-                usuarios.SituacaoUsuario = true;
+                // 2. O 'ModelState.IsValid' (que agora sabemos que funciona)
+                if (ModelState.IsValid)
+                {
+                    usuarios.SituacaoUsuario = true;
 
-                _usuariosRepositorio.Adicionar(usuarios);
+                    // 3. Use 'await' para ESPERAR o repositório terminar
+                    await _usuariosRepositorio.Adicionar(usuarios);
 
-                return RedirectToAction("Index");
+                    TempData["MensagemSucesso"] = "Usuário cadastrado com sucesso!";
+
+                    // 4. Busque a lista nova DEPOIS que o usuário foi adicionado
+                    List<UsuariosModel> listaUsuarios = _usuariosRepositorio.ListarUsuarios();
+
+                    // 5. Retorne a View 'Index' com a lista JÁ ATUALIZADA
+                    return View("Index", listaUsuarios);
+                }
+
+                // Se o modelo não for válido, retorna para a tela de criação
+                return View(usuarios);
             }
-            return View(usuarios);
+            catch (Exception erro)
+            {
+                TempData["MensagemErro"] = $"Ops, não conseguimos cadastrar o usuário. Detalhe: {erro.Message}";
+                return View(usuarios); // Retorna para a tela de criação
+            }
         }
 
 

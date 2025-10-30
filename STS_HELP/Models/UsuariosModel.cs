@@ -23,10 +23,6 @@ namespace STS_HELP.Models
         public string Email { get; set; } = "";
 
 
-        //[Column("senha")]
-        //public string Senha { get; set; } = "";
-
-
         [Column("tipo_usuario")]
         public string TipoUsuario { get; set; } = "";
 
@@ -34,6 +30,8 @@ namespace STS_HELP.Models
         public bool SituacaoUsuario { get; set; }
 
         [NotMapped]
+        [Required(ErrorMessage = "Digite a senha")]
+        [MinLength(6, ErrorMessage = "A senha deve ter no mínimo 6 caracteres")]
         public string SenhaParaCadastro { get; set; } = "";
 
     }

@@ -85,41 +85,53 @@ namespace STS_HELP.Repositorio
             UsuariosModel usuarioDB = ExibeInfoUsuario(usuarios.Id);
             if (usuarioDB == null) throw new Exception("Houve um Erro na Edição do Cadastro do Usuário");
 
-            // 2. Atualiza os dados do perfil local (Nome, Email, Tipo)
+            // 2. Prepara um payload dinâmico para a API de Autenticação
+            var authApiPayload = new Dictionary<string, object>();
+
+            // 3. --- LÓGICA DA NOVA SENHA ---
+            // Se o admin digitou uma nova senha, adiciona ao payload
+            if (!string.IsNullOrEmpty(usuarios.SenhaParaCadastro))
+            {
+                authApiPayload["password"] = usuarios.SenhaParaCadastro;
+            }
+
+            // 4. --- LÓGICA DO NOVO EMAIL ---
+            // Se o email do formulário é diferente do email no banco, adiciona ao payload
+            if (usuarioDB.Email != usuarios.Email)
+            {
+                authApiPayload["email"] = usuarios.Email;
+            }
+
+            // 5. Atualiza os dados do perfil local (do seu banco 'public.usuarios')
+            //    Isso sempre acontece (Nome, Tipo)
             usuarioDB.Nome = usuarios.Nome;
-            usuarioDB.Email = usuarios.Email;
+            usuarioDB.Email = usuarios.Email; // Atualiza o email local também
             usuarioDB.TipoUsuario = usuarios.TipoUsuario;
             _bancoContext.Usuarios.Update(usuarioDB);
 
-            // 3. --- LÓGICA DA NOVA SENHA (VIA HTTP) ---
-            if (!string.IsNullOrEmpty(usuarios.SenhaParaCadastro))
+            // 6. --- CHAMADA DA API (Se necessário) ---
+            // Se o payload tem algo (email ou senha para mudar), chame a API
+            if (authApiPayload.Count > 0)
             {
                 if (usuarioDB.AuthId == null)
                 {
-                    throw new Exception("Usuário não vinculado à autenticação.");
+                    throw new Exception("Este usuário não pode ter os dados de autenticação alterados (sem AuthId).");
                 }
 
-                // Pega a URL base e a ServiceKey da configuração (precisamos delas de novo)
-                // Precisamos injetar IConfiguration também no repositório
-                // (Veja Passo 3 abaixo)
+                // Pega a URL base e a ServiceKey da configuração
                 var supabaseUrl = _configuration["Supabase:Url"];
                 var supabaseServiceKey = _configuration["Supabase:ServiceKey"];
                 var userId = usuarioDB.AuthId.ToString();
 
-                // Monta a URL da API Admin
-                // Ex: https://kxg...co/auth/v1/admin/users/UUID_DO_USUARIO
+                // Monta a URL da API Admin (com o /auth/v1 que descobrimos)
                 var requestUrl = $"{supabaseUrl}/auth/v1/admin/users/{userId}";
 
                 // Cria o corpo da requisição (payload JSON)
-                var payload = new { password = usuarios.SenhaParaCadastro };
-                var jsonPayload = JsonSerializer.Serialize(payload); // Ou JsonConvert.SerializeObject(payload);
+                var jsonPayload = JsonSerializer.Serialize(authApiPayload);
                 var httpContent = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
 
                 // Cria o cliente HTTP
                 var httpClient = _httpClientFactory.CreateClient();
-
-                // Cria a requisição PUT (ou PATCH, dependendo da API)
-                // A documentação do Supabase indica PUT para /admin/users/{user_id}
                 var request = new HttpRequestMessage(HttpMethod.Put, requestUrl);
 
                 // Adiciona os Headers OBRIGATÓRIOS de Admin
@@ -130,17 +142,14 @@ namespace STS_HELP.Repositorio
                 // Envia a requisição
                 var response = await httpClient.SendAsync(request);
 
-                // Verifica se a API retornou sucesso (ex: 200 OK)
                 if (!response.IsSuccessStatusCode)
                 {
-                    // Se falhou, lê a mensagem de erro da API e lança uma exceção
                     var errorContent = await response.Content.ReadAsStringAsync();
-                    throw new Exception($"Erro ao atualizar senha no Supabase: {response.StatusCode} - {errorContent}");
+                    throw new Exception($"Erro ao atualizar dados no Supabase Auth: {response.StatusCode} - {errorContent}");
                 }
-                // Se chegou aqui, a senha foi atualizada com sucesso no Supabase Auth
             }
 
-            // 4. Salva as mudanças do perfil (Nome/Email/Tipo) no seu banco
+            // 7. Salva as mudanças do perfil local (Nome/Email/Tipo)
             await _bancoContext.SaveChangesAsync();
             return usuarioDB;
         }
@@ -155,8 +164,6 @@ namespace STS_HELP.Repositorio
             {
                 throw new Exception("Erro ao Inativar Usuário: ID não encontrado.");
             }
-
-            // Altere o status do usuário encontrado
 
             if(usuarioDB.SituacaoUsuario == false)
             {

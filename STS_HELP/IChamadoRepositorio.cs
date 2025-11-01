@@ -13,8 +13,13 @@ namespace STS_HELP
 
         ChamadosModel AceitarEFinalizarChamado(int id, int idTecnico);
 
-      
+        int TotalChamados();
 
-       
+        int TotalChamadosAberto();
+        int TotalChamadosEmAtendimento();
+
+        int TotalChamadosFinalizados();
+
+
     }
 }

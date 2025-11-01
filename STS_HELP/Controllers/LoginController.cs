@@ -67,7 +67,7 @@ namespace STS_HELP.Controllers
                         }
                     });
 
-                    //var session = await _gotrueClient.SignIn(loginModel.Email, loginModel.Senha);
+                    
                     var session = await publicClient.SignIn(loginModel.Email, loginModel.Senha);
 
                     UsuariosModel usuario = _usuariosRepositorio.BuscarLogin(loginModel.Email);
@@ -75,11 +75,19 @@ namespace STS_HELP.Controllers
                     if (usuario != null )
                     {
 
-                        
                         if (usuario.SituacaoUsuario == true)
                         {
                             _sessao.CriarSessaoUsuario(usuario);
-                            return RedirectToAction("Index", "Home");
+
+                            if(usuario.TipoUsuario == "Gestor")
+                            {
+                                return RedirectToAction("IndexGestor", "Home");
+                            }
+                            else if(usuario.TipoUsuario == "Tecnico")
+                            {
+                                return RedirectToAction("Index", "Home");
+                            }
+                                
                         }
                         else
                         {

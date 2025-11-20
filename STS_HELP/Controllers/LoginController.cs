@@ -14,7 +14,6 @@ namespace STS_HELP.Controllers
 
         private readonly IUsuariosRepositorio _usuariosRepositorio;
         private readonly ISessao _sessao;
-        //private readonly Supabase.Gotrue.Client _gotrueClient;
         private readonly IConfiguration _configuration;
 
         public loginController(IUsuariosRepositorio usuarioRepositorio, ISessao sessao, IConfiguration configuration)

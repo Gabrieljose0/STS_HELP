@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/STS_HELP.styles.css" asp-append-version="true" />
     <link href="https://cdn.datatables.net/v/dt/dt-2.3.4/datatables.min.css" rel="stylesheet" integrity="sha384-pmGS6IIcXhAVIhcnh9X/mxffzZNHbuxboycGuQQoP3pAbb0SwlSUUHn2v22bOenI" crossorigin="anonymous">
+    <link rel="stylesheet" href="~/lib/fontawesome-free-7.1.0-web/css/all.css"/>
 
 </head>
 <body>
@@ -42,14 +43,14 @@
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2025 - STS_HELP
-            @* <a asp-area="" asp-controller="Home" asp-action="index">Inicio</a>
-            <a asp-area="" asp-controller="Chamados" asp-action="Privacy">Chamados</a> *@
         </div>
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true" defer></script>
+    <script src="~/lib/chart.js/Chart.min.js"></script>
+    
     @await RenderSectionAsync("Scripts", required: false)
    <script src="https://cdn.datatables.net/v/dt/dt-2.3.4/datatables.min.js" integrity="sha384-X2pTSfom8FUa+vGQ+DgTCSyBZYkC1RliOduHa0X96D060s7Q//fnOh3LcazRNHyo" crossorigin="anonymous"></script>
 </body>

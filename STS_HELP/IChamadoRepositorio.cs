@@ -21,5 +21,15 @@ namespace STS_HELP
         int TotalChamadosFinalizados();
 
 
+        int TotalChamadosProblemaEquipamento();
+        int TotalChamadosProblemaRede();
+        int TotalChamadosErroNoSistema();
+        int TotalChamadosAcessoNegado();
+        int TotalChamadosSolicitacaoDeEquipamento();
+        int TotalChamadosSolicitacaoDeSoftware();
+
+        int TotalAtendimentosPorTecnico(int idTecnico);
+
+
     }
 }

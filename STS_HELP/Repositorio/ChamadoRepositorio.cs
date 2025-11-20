@@ -104,7 +104,50 @@ namespace STS_HELP.Repositorio
             return ChamadosDB;
         }
 
-        
+        public int TotalChamadosProblemaEquipamento()
+        {
+            return _bancoContext.Chamados
+                .Count(c => c.Categoria.Nome == "Problema de Equipamento");
+        }
+
+        public int TotalChamadosProblemaRede()
+        {
+            return _bancoContext.Chamados
+                .Count(c => c.Categoria.Nome == "Problemas de Rede");
+        }
+
+        public int TotalChamadosErroNoSistema()
+        {
+            return _bancoContext.Chamados
+                .Count(c => c.Categoria.Nome == "Erro no Sistema");
+        }
+
+        public int TotalChamadosAcessoNegado()
+        {
+            return _bancoContext.Chamados
+                 .Count(c => c.Categoria.Nome == "Acesso Negado");
+        }
+
+        public int TotalChamadosSolicitacaoDeEquipamento()
+        {
+            return _bancoContext.Chamados
+                .Count(c => c.Categoria.Nome == "Solicitação de Equipamento");
+        }
+
+        public int TotalChamadosSolicitacaoDeSoftware()
+        {
+            return _bancoContext.Chamados
+                .Count(c => c.Categoria.Nome == "Solicitação de Software");
+        }
+
+
+        public int TotalAtendimentosPorTecnico(int idTecnico)
+        {
+            return _bancoContext.Chamados
+        .Count(c => c.idTecnico == idTecnico && c.Status.Nome == "Concluido");
+        }
+
+
     }
 
 }

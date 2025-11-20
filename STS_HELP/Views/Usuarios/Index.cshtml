@@ -22,11 +22,6 @@
                 <th scope="col">EMAIL</th>
                 <th scope="col">USUARIO</th>
                 <th scope="col">ATIVO?</th>
-                @* <th scope="col">SENHA</th>
-                <th scope="col">STATUS</th>
-                <th scope="col">USUARIO</th>
-                <th scope="col">DT ABERTURA</th>
-                <th scope="col">DT FECHAMENTO</th>*@
                 <th scope="col">EDITAR</th>
                 <th scope="col">INATIVAR/ATIVAR</th> 
             </tr>
@@ -42,11 +37,6 @@
                         <td>@usuario.Email</td>
                         <td>@usuario.TipoUsuario</td>
                         <td>@usuario.SituacaoUsuario</td>
-                        @*<td>@usuario.Senha</td>
-                        <td>@chamado.status</td>
-                        <td>@chamado.Usuario</td>
-                        <td>@chamado.dt_Abertura</td>
-                        <td>@chamado.dt_fechamento</td> *@
                         <td> <a class="btn btn-primary" role="button" asp-route-id="@usuario.Id" asp-controller="Usuarios" asp-action="EditarUsuario">  Editar  </a> </td>
 
                         <td>

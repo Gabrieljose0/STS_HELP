@@ -14,11 +14,8 @@ namespace STS_HELP.Controllers
             _sessao = sessao;
         }
 
-        // 3. Este método "mágico" (OnActionExecuting) roda ANTES
-        //    de qualquer Action (como a "IndexChamadosGestor") ser executada.
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            // (TROQUE "BuscarSessaoUsuario" PELO SEU MÉTODO REAL)
             var usuario = _sessao.BuscarSessaoUsuario();
 
             // Caso 1: Não há sessão (ninguém logado)
@@ -28,10 +25,9 @@ namespace STS_HELP.Controllers
                 context.Result = new RedirectToRouteResult(new RouteValueDictionary { { "controller", "Login" }, { "action", "Index" } });
             }
             // Caso 2: Há sessão, mas o usuário está INATIVO
-            else if (usuario.SituacaoUsuario == false) // A VERIFICAÇÃO QUE FALTAVA!
+            else if (usuario.SituacaoUsuario == false)
             {
-                // Remove a sessão do usuário inativo (força o logout)
-                // (TROQUE "RemoverSessaoUsuario" PELO SEU MÉTODO REAL)
+
                 _sessao.RemoverSessaoUsuario();
 
                 TempData["MensagemErro"] = "Seu usuário foi desativado. Por favor, contate o gestor.";
@@ -40,7 +36,6 @@ namespace STS_HELP.Controllers
                 context.Result = new RedirectToRouteResult(new RouteValueDictionary { { "controller", "Login" }, { "action", "Index" } });
             }
 
-            // Se passou nos dois testes (está logado E está ativo),
             // o código continua normalmente.
             base.OnActionExecuting(context);
         }

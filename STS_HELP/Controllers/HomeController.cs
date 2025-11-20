@@ -32,7 +32,16 @@ namespace STS_HELP.Controllers
             int totalAberto = _chamadoRepositorio.TotalChamadosAberto();
             int totalEmAtendimento = _chamadoRepositorio.TotalChamadosEmAtendimento();
             int totalAtendimentoFinalizado = _chamadoRepositorio.TotalChamadosFinalizados();
-            
+
+            int TotalChamadosProblemaEquipamento = _chamadoRepositorio.TotalChamadosProblemaEquipamento();
+            int TotalChamadosProblemaRede = _chamadoRepositorio.TotalChamadosProblemaRede();
+            int TotalChamadosErroNoSistema = _chamadoRepositorio.TotalChamadosErroNoSistema();
+            int TotalChamadosAcessoNegado = _chamadoRepositorio.TotalChamadosAcessoNegado();
+            int TotalChamadosSolicitacaoDeEquipamento = _chamadoRepositorio.TotalChamadosSolicitacaoDeEquipamento();
+            int TotalChamadosSolicitacaoDeSoftware = _chamadoRepositorio.TotalChamadosSolicitacaoDeSoftware();
+
+
+
 
 
 
@@ -41,7 +50,21 @@ namespace STS_HELP.Controllers
             ViewBag.TotalChamadosAberto = totalAberto;
             ViewBag.TotalDeChamadosEmAtendimento = totalEmAtendimento;
             ViewBag.TotalChamadosFinalizados = totalAtendimentoFinalizado;
-           
+
+            ViewBag.TotalChamadosProblemaEquipamento = TotalChamadosProblemaEquipamento;
+            ViewBag.TotalChamadosProblemaRede = TotalChamadosProblemaRede;
+            ViewBag.TotalChamadosErroNoSistema = TotalChamadosErroNoSistema;
+            ViewBag.TotalChamadosAcessoNegado = TotalChamadosAcessoNegado;
+            ViewBag.TotalChamadosSolicitacaoDeEquipamento = TotalChamadosSolicitacaoDeEquipamento;
+            ViewBag.TotalChamadosSolicitacaoDeSoftware = TotalChamadosSolicitacaoDeSoftware;
+
+            ViewBag.TotalAtendimentosIvanildo = _chamadoRepositorio.TotalAtendimentosPorTecnico(27);
+            ViewBag.TotalAtendimentosViviane = _chamadoRepositorio.TotalAtendimentosPorTecnico(26);
+            ViewBag.TotalAtendimentosEvelyn = _chamadoRepositorio.TotalAtendimentosPorTecnico(24);
+            ViewBag.TotalAtendimentosAugusto = _chamadoRepositorio.TotalAtendimentosPorTecnico(30);
+
+
+
 
             return View("IndexGestor");
         }

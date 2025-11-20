@@ -95,7 +95,26 @@ namespace STS_HELP.Repositorio
             {
                 ChamadosDB.statusId = 3;
 
-                ChamadosDB.dt_fechamento = DateTime.UtcNow;
+                //ChamadosDB.dt_fechamento = DateTime.UtcNow;
+
+                DateTime horarioUtc = DateTime.UtcNow;
+
+
+                string idFuso = "E. South America Standard Time";
+                TimeZoneInfo fusoBrasilia;
+
+                try
+                {
+                    fusoBrasilia = TimeZoneInfo.FindSystemTimeZoneById(idFuso);
+                }
+                catch
+                {
+                    fusoBrasilia = TimeZoneInfo.FindSystemTimeZoneById("America/Sao_Paulo");
+                }
+
+                // 3. Converte e salva no objeto
+                ChamadosDB.dt_fechamento = DateTime.SpecifyKind(TimeZoneInfo.ConvertTimeFromUtc(horarioUtc, fusoBrasilia), DateTimeKind.Utc);
+
             }
 
             

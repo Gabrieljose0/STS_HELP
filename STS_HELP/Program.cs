@@ -6,6 +6,7 @@ using STS_HELP.Repositorio;
 
 
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 var supabaseUrl = builder.Configuration["Supabase:Url"] + "/auth/v1";
@@ -62,6 +63,10 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
+
+
+Rotativa.AspNetCore.RotativaConfiguration.Setup(@"C:\rotativa", "");
+
 
 app.UseHttpsRedirection();
 

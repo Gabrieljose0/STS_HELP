@@ -1,0 +1,123 @@
+﻿@model IEnumerable<STS_HELP.Models.ChamadosModel>
+
+@{
+    Layout = null; // Remove o layout padrão para o PDF sair limpo
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Relatório de Chamados</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th {
+            background-color: #f4f4f4;
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        .badge {
+            padding: 3px 8px;
+            border-radius: 4px;
+            color: white;
+            font-weight: bold;
+            font-size: 10px;
+        }
+
+        .bg-success {
+            background-color: green;
+        }
+        /* Cor para status Fechado/Concluído */
+        .bg-danger {
+            background-color: red;
+        }
+        /* Cor para status Aberto/Pendente */
+        .bg-warning {
+            background-color: orange;
+        }
+        /* Cor para outros status */
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h2>Sistema STS HELP</h2>
+        <p>Relatório Geral de Chamados</p>
+        <small>Gerado em: @DateTime.Now.ToString("dd/MM/yyyy HH:mm")</small>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 5%">ID</th>
+                <th style="width: 30%">Assunto</th>
+                <th style="width: 25%">Solicitante</th>
+                <th style="width: 15%">Data</th>
+                <th style="width: 15%">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.Titulo</td>
+                        <td>@item.Texto</td>
+                        <td>@item.dt_Abertura.ToString("dd/MM/yyyy")</td>
+                        <td>
+                            @if (item.Status != null && item.Status.Nome != null && item.Status.Nome.ToLower().Contains("aberto"))
+                            {
+                                <span class="badge bg-danger">@item.Status.Nome</span>
+                            }
+                            else if (item.Status != null && item.Status.Nome != null && item.Status.Nome.ToLower().Contains("fechado"))
+                            {
+                                <span class="badge bg-success">@item.Status.Nome</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-warning">
+                                    @(item.Status != null ? item.Status.Nome : "Sem Status")
+                                </span>
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="5" style="text-align:center">Nenhum chamado encontrado.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</body>
+</html>

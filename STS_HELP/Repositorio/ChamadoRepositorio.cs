@@ -167,6 +167,44 @@ namespace STS_HELP.Repositorio
         }
 
 
+
+
+        public List<ChamadosModel> BuscarRelatorioPersonalizado(string tecnico, string solicitante, DateTime? dataInicio)
+        {
+            var query = _bancoContext.Chamados
+                .Include(x => x.Status)
+                .Include(x => x.Usuario)
+                .Include(x => x.Tecnico)
+                .AsQueryable();
+
+            // 1. Correção do Filtro de TÉCNICO (Ignorando maiúsculas/minúsculas)
+            if (!string.IsNullOrEmpty(tecnico))
+            {
+                // .ToLower() garante que "Ivanildo" e "ivanildo" sejam iguais
+                query = query.Where(x => x.Tecnico != null && x.Tecnico.Nome.ToLower().Contains(tecnico.ToLower()));
+            }
+
+            // 2. Correção do Filtro de SOLICITANTE (Ignorando maiúsculas/minúsculas)
+            if (!string.IsNullOrEmpty(solicitante))
+            {
+                query = query.Where(x => x.Usuario != null && x.Usuario.Nome.ToLower().Contains(solicitante.ToLower()));
+            }
+
+            // 3. Correção do ERRO DE DATA (PostgreSQL)
+            if (dataInicio.HasValue)
+            {
+                // O PostgreSQL exige UTC. Essa linha força a data a ser UTC sem mudar o horário.
+                DateTime dataUtc = DateTime.SpecifyKind(dataInicio.Value, DateTimeKind.Utc);
+
+                // Compara com a data UTC
+                query = query.Where(x => x.dt_Abertura >= dataUtc);
+            }
+
+            return query.OrderByDescending(x => x.dt_Abertura).ToList();
+        }
+
+
+
     }
 
 }

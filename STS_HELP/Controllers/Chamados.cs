@@ -1,9 +1,8 @@
-﻿using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Rotativa.AspNetCore;
 using STS_HELP.Filters;
 using STS_HELP.Helper;
 using STS_HELP.Models;
-using STS_HELP.Repositorio;
 
 namespace STS_HELP.Controllers
 {
@@ -97,9 +96,29 @@ namespace STS_HELP.Controllers
         }
 
 
-        
+
+
+
+
+
+        public IActionResult GerarRelatorioPDF(string filtroTecnico, string filtroSolicitante, DateTime? filtroData)
+        {
+            // Chama o novo método do repositório passando os 3 filtros
+            var chamadosFiltrados = _chamadoRepositorio.BuscarRelatorioPersonalizado(filtroTecnico, filtroSolicitante, filtroData);
+
+            // Retorna para a View PDF
+            return new ViewAsPdf("~/Views/Relatorios/RelatorioPDF.cshtml", chamadosFiltrados)
+            {
+                PageSize = Rotativa.AspNetCore.Options.Size.A4,
+                PageOrientation = Rotativa.AspNetCore.Options.Orientation.Landscape,
+                PageMargins = { Left = 10, Right = 10, Top = 10, Bottom = 10 }
+            };
+        }
+
+
 
 
 
     }
+
 }

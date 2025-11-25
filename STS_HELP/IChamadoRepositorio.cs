@@ -31,5 +31,8 @@ namespace STS_HELP
         int TotalAtendimentosPorTecnico(int idTecnico);
 
 
+        List<ChamadosModel> BuscarRelatorioPersonalizado(string tecnico, string solicitante, DateTime? dataInicio);
+
+        
     }
 }

@@ -14,6 +14,7 @@
     <!-- Main Content -->
     <div id="content">
 
+ 
 
 
         <!-- Begin Page Content -->
@@ -22,13 +23,57 @@
             <!-- Page Heading -->
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
                 <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-                <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-                    <i class="fas fa-download fa-sm text-white-50"></i> Generate Report dshfs
-                </a>
             </div>
 
+            <div class="accordion accordion-flush" id="accordionFlushExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                            <div class="card-header">
+                                <h5 class="m-0"><i class="fa fa-print"></i> Gerar Relatório de Chamados</h5>
+                            </div>
+                        </button>
+                    </h2>
+                    <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                        <div class="card shadow-sm mb-4">
+
+                            <div class="card-body">
+                                <form asp-controller="Chamados" asp-action="GerarRelatorioPDF" method="get" target="_blank">
+                                    <div class="row">
+
+                                        <div class="col-md-3">
+                                            <label>Técnico Responsável</label>
+                                            <input type="text" name="filtroTecnico" class="form-control" placeholder="Ex: Ivanildo">
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label>Solicitante (Quem abriu)</label>
+                                            <input type="text" name="filtroSolicitante" class="form-control" placeholder="Ex: Maria">
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label>Abertos a partir de:</label>
+                                            <input type="date" name="filtroData" class="form-control">
+                                        </div>
+
+                                        <div class="col-md-3 d-flex align-items-end">
+                                            <button type="submit" class="btn btn-danger w-100">
+                                                Gerar PDF
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <small class="text-muted mt-2 d-block">* Deixe os campos em branco para trazer todos os registros.</small>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
             <!-- Content Row -->
-            <div class="row">
+            <div class="row mt-5">
 
                 <!-- TOTAL CHAMADOS -->
                 <div class="col-xl-3 col-md-6 mb-4">
@@ -191,3 +236,7 @@
         </div>
 
     </div>
+
+    </div>
+
+</div>

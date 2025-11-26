@@ -1,7 +1,9 @@
 ﻿@model IEnumerable<STS_HELP.Models.ChamadosModel>
 
 @{
-    Layout = null; // Remove o layout padrão para o PDF sair limpo
+    Layout = null;
+    var timeZoneBrasil = TimeZoneInfo.FindSystemTimeZoneById("E. South America Standard Time");
+    var dataHoraBrasil = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZoneBrasil);
 }
 
 <!DOCTYPE html>
@@ -68,7 +70,7 @@
     <div class="header">
         <h2>Sistema STS HELP</h2>
         <p>Relatório Geral de Chamados</p>
-        <small>Gerado em: @DateTime.Now.ToString("dd/MM/yyyy HH:mm")</small>
+        <small>Gerado em: @dataHoraBrasil.ToString("dd/MM/yyyy HH:mm")</small>
     </div>
 
     <table>

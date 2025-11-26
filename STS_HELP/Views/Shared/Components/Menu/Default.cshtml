@@ -7,14 +7,22 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <a class="navbar-brand d-lg-none" href="#">STS_HELP</a>
-
         <div class="collapse navbar-collapse" id="menuPrincipal">
             <div class="d-flex flex-column align-items-center w-100">
 
-                <a class="d-block p-3 link-dark text-decoration-none text-center" title="STS_HELP" asp-controller="Home" asp-action="Index">
-                    <h5 class="fw-bold">STS_HELP</h5>
-                </a>
+                @if(Model.TipoUsuario == "Tecnico")
+                {
+                    <a class="d-block p-3 link-dark text-decoration-none text-center" title="STS_HELP" asp-controller="Home" asp-action="Index">
+                        <h5 class="fw-bold">STS_HELP</h5>
+                    </a>
+                }
+                else if (Model.TipoUsuario == "Gestor")
+                {
+                    <a class="d-block p-3 link-dark text-decoration-none text-center" title="STS_HELP" asp-controller="Home" asp-action="IndexGestor">
+                        <h5 class="fw-bold">STS_HELP</h5>
+                    </a>
+                }
+
 
                 <h4 class="text-center p-2 fs-6">@Model.Nome</h4>
 

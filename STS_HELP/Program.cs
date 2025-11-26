@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using Rotativa.AspNetCore;
 using STS_HELP;
+using STS_HELP.Controllers;
 using STS_HELP.Data;
 using STS_HELP.Helper;
 using STS_HELP.Repositorio;
@@ -65,7 +67,8 @@ if (!app.Environment.IsDevelopment())
 }
 
 
-Rotativa.AspNetCore.RotativaConfiguration.Setup(@"C:\rotativa", "");
+var caminhoRotativa = System.IO.Path.Combine(app.Environment.WebRootPath, "lib", "rotativa");
+Rotativa.AspNetCore.RotativaConfiguration.Setup(caminhoRotativa, string.Empty);
 
 
 app.UseHttpsRedirection();

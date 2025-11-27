@@ -88,7 +88,8 @@ namespace STS_HELP.Controllers
                             }
                             else if (usuario.TipoUsuario == "Colaborador")
                             {
-                                return RedirectToAction("Index", "Restrito");
+                                TempData["MensagemErro"] = $"Usuário Não Possui nivel de autorização de Acesso";
+                                return View("Index");
                             }
 
                         }

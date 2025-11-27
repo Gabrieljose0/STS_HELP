@@ -86,7 +86,11 @@ namespace STS_HELP.Controllers
                             {
                                 return RedirectToAction("Index", "Home");
                             }
-                                
+                            else if (usuario.TipoUsuario == "Colaborador")
+                            {
+                                return RedirectToAction("Index", "Restrito");
+                            }
+
                         }
                         else
                         {

@@ -107,7 +107,7 @@ if ($('#tabelaUsuarios').length) {
         $('#tabelaUsuarios').DataTable({
             "language": {
                 "url": "https://cdn.datatables.net/plug-ins/2.0.7/i18n/pt-BR.json"
-            }
+            },
             "order": [[0, "desc"]]
         });
     });
@@ -120,12 +120,15 @@ if ($('tabelaChamados')) {
         $('#tabelaChamados').DataTable({
             "language": {
                 "url": "https://cdn.datatables.net/plug-ins/2.0.7/i18n/pt-BR.json"
-            }
+            },
             "order": [[0, "desc"]]
         });
     });
 
 }
+
+
+
 
 
 

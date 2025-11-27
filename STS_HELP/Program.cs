@@ -5,6 +5,8 @@ using STS_HELP.Controllers;
 using STS_HELP.Data;
 using STS_HELP.Helper;
 using STS_HELP.Repositorio;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
 
 
 
@@ -72,6 +74,18 @@ Rotativa.AspNetCore.RotativaConfiguration.Setup(caminhoRotativa, string.Empty);
 
 
 app.UseHttpsRedirection();
+
+
+
+var culturaPadrao = new CultureInfo("pt-BR");
+var opcoesLocalizacao = new RequestLocalizationOptions
+{
+    DefaultRequestCulture = new RequestCulture(culturaPadrao),
+    SupportedCultures = new List<CultureInfo> { culturaPadrao },
+    SupportedUICultures = new List<CultureInfo> { culturaPadrao }
+};
+
+app.UseRequestLocalization(opcoesLocalizacao);
 
 
 app.UseStaticFiles();

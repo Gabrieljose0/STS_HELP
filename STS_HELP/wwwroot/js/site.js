@@ -131,6 +131,9 @@ if ($('tabelaChamados')) {
 
 
 
+
+
+
 //GRAFICO PIZZA
 // Adicione este "ouvinte" para garantir que o HTML carregou antes de rodar o script
 document.addEventListener("DOMContentLoaded", function () {

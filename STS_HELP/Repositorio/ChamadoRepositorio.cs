@@ -27,7 +27,7 @@ namespace STS_HELP.Repositorio
                          .Include(c => c.Categoria)
                          .Include(c => c.Prioridade)
                          .Include(c => c.Tecnico)
-                         .OrderBy(c => c.Id)
+                         .OrderByDescending(c => c.Id)
                          .ToList();
 
         }

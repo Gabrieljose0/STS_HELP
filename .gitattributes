@@ -61,3 +61,8 @@
 #*.PDF   diff=astextplain
 #*.rtf   diff=astextplain
 #*.RTF   diff=astextplain
+
+# Ignorar bibliotecas nas estatísticas de linguagem
+STS_HELP/wwwroot/lib/** linguist-vendored
+STS_HELP/wwwroot/js/** linguist-vendored
+STS_HELP/wwwroot/css/** linguist-vendored

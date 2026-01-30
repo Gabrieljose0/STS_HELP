@@ -62,16 +62,21 @@ Pré-requisitos: .NET SDK 6.0 ou superior.
 
 ```bash
 # Clone este repositório
-$ git clone [https://github.com/Gabrieljose0/STS_HELP.git](https://github.com/Gabrieljose0/STS_HELP.git)
+$ git clone https://github.com/Gabrieljose0/STS_HELP.git
 
 # Acesse a pasta do projeto
 $ cd STS_HELP
 
-# Restaure as dependências
+# 1. Configuração do Banco de Dados
+# O projeto não utiliza Migrations automáticas. 
+# Localize o arquivo '/Database/script_banco.sql' neste repositório e execute-o 
+# no seu banco PostgreSQL (pgAdmin ou Supabase) para criar as tabelas necessárias.
+
+# 2. Configuração da Conexão
+# Renomeie o arquivo 'appsettings.Example.json' para 'appsettings.json' (se houver) 
+# ou edite o arquivo existente inserindo sua String de Conexão do PostgreSQL.
+# "ConnectionStrings": { "DefaultConnection": "Host=...;Database=...;User Id=...;Password=..." }
+
+# 3. Executando o Projeto
 $ dotnet restore
-
-# Configure a String de Conexão no appsettings.json com seu banco PostgreSQL
-# "ConnectionStrings": { "DefaultConnection": "SuaStringDoSupabaseAqui" }
-
-# Execute o projeto
 $ dotnet run

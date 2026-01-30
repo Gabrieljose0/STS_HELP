@@ -64,5 +64,3 @@
 
 # Ignorar bibliotecas nas estatísticas de linguagem
 **/wwwroot/lib/** linguist-vendored
-**/wwwroot/css/** linguist-vendored
-**/wwwroot/js/** linguist-vendored
